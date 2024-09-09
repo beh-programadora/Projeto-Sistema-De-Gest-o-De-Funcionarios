@@ -1,0 +1,45 @@
+# Arquivos de configuração de banco de dados
+*.sql
+
+# Arquivos temporários
+*.log
+*.tmp
+
+# Arquivos de backup
+*.bak
+*.sql~
+
+# Diretórios de dependências
+node_modules/
+venv/
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+Enunciado do Projeto
+Objetivo
+Desenvolver um sistema de gestão de funcionários que permita a criação, modificação, consulta e exclusão de informações relacionadas a departamentos, funcionários e salários.
+
+Requisitos
+Banco de Dados:
+
+Criar o banco de dados GestaoFuncionarios.
+Criar as tabelas Departamentos, Funcionarios e Salarios com os campos e relacionamentos apropriados.
+Operações de CRUD:
+
+Inserir dados de teste nas tabelas.
+Consultar informações sobre funcionários e seus departamentos.
+Atualizar salários e nomes de departamentos.
+Excluir funcionários e departamentos com controle de integridade referencial.
+Consultas:
+
+Listar todos os funcionários e seus departamentos.
+Calcular o salário total por departamento.
+Consultar o histórico salarial de um funcionário específico.
+Manutenção de Dados:
+
+Garantir a integridade referencial ao excluir registros relacionados.
+Entregáveis
+Scripts SQL para criação de banco de dados, tabelas e dados de teste.
+Consultas SQL para relatórios e manutenção de dados.
+Arquivos de configuração, incluindo .gitignore para gerenciamento de versões.
