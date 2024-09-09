@@ -1,0 +1,110 @@
+CREATE DATABASE GestaoFuncionarios;
+USE GestaoFuncionarios;
+CREATE TABLE Departamentos (
+    id_departamento INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL
+);
+CREATE TABLE Funcionarios (
+    id_funcionario INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cargo VARCHAR(100) NOT NULL,
+    salario DECIMAL(10, 2) NOT NULL,
+    id_departamento INT,
+    FOREIGN KEY (id_departamento) REFERENCES Departamentos(id_departamento)
+);
+CREATE TABLE Salarios (
+    id_salario INT AUTO_INCREMENT PRIMARY KEY,
+    id_funcionario INT NOT NULL,
+    data DATE NOT NULL,
+    valor DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (id_funcionario) REFERENCES Funcionarios(id_funcionario)
+);
+INSERT INTO Departamentos (nome) VALUES
+('Recursos Humanos'),
+('Financeiro'),
+('Tecnologia'),
+('Marketing'),
+('Vendas');
+
+INSERT INTO Funcionarios (nome, cargo, salario, id_departamento) VALUES
+('Ana Silva', 'Analista de Recursos Humanos', 4000.00, 1),
+('Bruno Oliveira', 'Contador', 4500.00, 2),
+('Carla Santos', 'Desenvolvedora de Software', 6000.00, 3),
+('Daniel Costa', 'Especialista em Marketing', 5000.00, 4),
+('Elaine Pereira', 'Gerente de Vendas', 7000.00, 5);
+
+INSERT INTO Salarios (id_funcionario, data, valor) VALUES
+(1, '2024-08-31', 4000.00),
+(2, '2024-08-31', 4500.00),
+(3, '2024-08-31', 6000.00),
+(4, '2024-08-31', 5000.00),
+(5, '2024-08-31', 7000.00),
+(1, '2024-09-30', 4100.00),  
+(3, '2024-09-30', 6200.00);  
+
+SELECT 
+    f.id_funcionario AS ID_Funcionario,
+    f.nome AS Nome_Funcionario,
+    f.cargo AS Cargo,
+    f.salario AS Salario,
+    d.nome AS Nome_Departamento
+FROM 
+    Funcionarios f
+JOIN 
+    Departamentos d ON f.id_departamento = d.id_departamento;
+
+SELECT 
+    d.nome AS Nome_Departamento,
+    SUM(f.salario) AS Salario_Total
+FROM 
+    Funcionarios f
+JOIN 
+    Departamentos d ON f.id_departamento = d.id_departamento
+GROUP BY 
+    d.nome;
+
+SELECT 
+    f.nome AS Nome_Funcionario,
+    s.data AS Data,
+    s.valor AS Valor_Salario
+FROM 
+    Salarios s
+JOIN 
+    Funcionarios f ON s.id_funcionario = f.id_funcionario
+WHERE 
+    f.id_funcionario = 1
+ORDER BY 
+    s.data;
+
+UPDATE Funcionarios
+SET salario = 4500.00
+WHERE id_funcionario = 1;
+
+UPDATE Departamentos
+SET nome = 'Contabilidade'
+WHERE id_departamento = 2;
+
+-- Remover a chave estrangeira existente
+ALTER TABLE Salarios
+DROP FOREIGN KEY Salarios_ibfk_1;  -- Substitua 'Salarios_ibfk_1' pelo nome real da sua chave estrangeira
+
+-- Adicionar a chave estrangeira com a opção ON DELETE CASCADE
+ALTER TABLE Salarios
+ADD CONSTRAINT fk_funcionario_salario
+FOREIGN KEY (id_funcionario) REFERENCES Funcionarios(id_funcionario)
+ON DELETE CASCADE;
+
+DELETE FROM Funcionarios
+WHERE id_funcionario = 1;
+
+SELECT * 
+FROM Funcionarios
+WHERE id_departamento = 2;
+
+UPDATE Funcionarios
+SET id_departamento = 3
+WHERE id_departamento = 2;
+
+DELETE FROM Funcionarios
+WHERE id_departamento = 2;
+
